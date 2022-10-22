@@ -3,6 +3,8 @@ const http = require('http');
 const dt = require('./datemodule');
 const url = require('url');
 const fs = require('fs');
+const events = require('events');
+const eventEmitter = new events.EventEmitter();
 
 fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) { // append new content
   if (err) throw err;
@@ -34,6 +36,16 @@ console.log(myURL)
 myURL.hash = 'baz';
 console.log(myURL.href);
 
+//Create an event handler:
+const myEventHandler = function () {
+  console.log('I hear a scream!');
+}
+
+//Assign the event handler to an event:
+eventEmitter.on('scream', myEventHandler);
+
+//Fire the 'scream' event:
+eventEmitter.emit('scream');
 
 http.createServer(function (req, res) {
 //   fs.readFile('test.html', function(err, data) {
